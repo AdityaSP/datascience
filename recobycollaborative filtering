@@ -27,3 +27,15 @@ print "==================================================="
 ratings_rdd = temp_ratings_raw.filter(lambda line: line!=temp_ratings_raw_header)\
     .map(lambda line: line.split(",")).map(lambda tokens: (tokens[0],tokens[1],tokens[2])).cache()
 
+
+temp_movies_raw = sc.textFile(movies_file)
+temp_movies_raw_header = temp_movies_raw.take(1)[0]
+print "==================================================="
+print "Header Information of Movies", temp_movies_raw_header
+print "==================================================="
+
+movies_rdd = temp_movies_raw.filter(lambda line: line!=temp_movies_raw_header)\
+    .map(lambda line: line.split(",")).map(lambda tokens: (tokens[0],tokens[1],tokens[2])).cache()
+
+print ("Number of movies", movies_rdd.count())
+print ("Number of ratings", ratings_rdd.count())
