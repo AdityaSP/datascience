@@ -1,1 +1,22 @@
+import math
+from pyspark import SparkContext
+from pyspark.mllib.recommendation import ALS
+import math
 
+
+# TO TUNE
+
+ratings_file = "file:///home/cloudera/recommendation/ml-latest-small/ratings.csv"
+movies_file = "file:///home/cloudera/recommendation/ml-latest-small/movies.csv"
+seed = 5L
+iterations = 10
+regularization_parameter = 0.1
+rank = 7
+tolerance = 0.02
+min_error= float('inf')
+
+sc = SparkContext("local", "Reco Engine")
+sc.setLogLevel("WARN")
+
+temp_ratings_raw = sc.textFile(ratings_file)
+temp_ratings_raw_header = temp_ratings_raw.take(1)[0]
