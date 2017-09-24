@@ -20,3 +20,10 @@ sc.setLogLevel("WARN")
 
 temp_ratings_raw = sc.textFile(ratings_file)
 temp_ratings_raw_header = temp_ratings_raw.take(1)[0]
+print "==================================================="
+print "Header Information of Ratings", temp_ratings_raw_header
+print "==================================================="
+
+ratings_rdd = temp_ratings_raw.filter(lambda line: line!=temp_ratings_raw_header)\
+    .map(lambda line: line.split(",")).map(lambda tokens: (tokens[0],tokens[1],tokens[2])).cache()
+
